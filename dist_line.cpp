@@ -5,69 +5,75 @@
 #include <map>
 #include <queue>
 #include <stdlib.h>
-#include <stack>
+#include <set>
 #include <algorithm>
 #include <math.h>
-#define abs(a) if(a < 0) a = -1*a;
-#define M_PI           3.14159265358979323846
+#include <stdio.h>
+#include <unistd.h>
+#include <stack>
+#define ff first
+#define ss second
+#define M_PI 3.14159265358979323846
 
 using namespace std;
 
-double px,py,dmin = 10000000,dmax = 0;
-pair<double,double> point[100000];
+typedef long long ll;
+
+vector<pair<double,double>> v;
 
 double dist(pair<double,double> a, pair<double,double> b){
-	double aux1 = a.first-b.first;
-	double aux2 = a.second-b.second;
-	return sqrt(aux1*aux1 + aux2*aux2);
+	double aux = a.ff-b.ff; aux*= aux;
+	double aux2 = a.ss-b.ss; aux2*=aux2;
+	return sqrt(aux+aux2);
 }
 
 double Dot(pair<double,double> a, pair<double,double> b){
-	return (a.first*b.first + a.second*b.second);
+	return a.ff*b.ff+a.ss*b.ss;
 }
 
-double dist_line(pair<double,double> a, pair<double,double> b){
-	pair<double, double> v1,v2,v3;
+double cross(pair<double,double> a, pair<double,double> b){
+	return a.ff*b.ss-a.ss*b.ff;
+}
 
-	if(a.first == b.first && a.second == b.second)
-		return dist(make_pair(px,py), a);
-	v1 = {px-a.first, py-a.second};
-	v2 = {px-b.first, py-b.second};
-	v3 = {b.first-a.first, b.second-a.second};
+double dist_line(pair<double,double> p, pair<double,double> a, pair<double,double> b){
+	pair<double,double> u,v,w,z;
+	u = {b.ff-a.ff,b.ss-a.ss}; //AB
+	v = {p.ff-a.ff,p.ss-a.ss}; //AP
+	w = {p.ff-b.ff,p.ss-b.ss}; //BP
+	z = {a.ff-b.ff,a.ss-b.ss}; //BA
 
-	if(Dot(v1,v3) < 0)
-		return dist(make_pair(px,py), a);
-	if(Dot(v2,v3) > 0)
-		return dist(make_pair(px,py), b);
-	return (fabs(v1.first*v2.second - v1.second*v2.first)/dist(a,b));
+	if(Dot(u,w) > 0)
+		return dist(p,b);
+	if(Dot(z,v) > 0)
+		return dist(p,a);
+	return fabs(cross(u,v))/dist(a,b);
 }
 
 int main() {
-	string s;
-	int n;
+	ios_base::sync_with_stdio(0);
+	
+	int n,i;
+	double maxD = 0,minD = 1e9;
+	pair<double,double> aux,p;
 
-	cin >> n >> px >> py;
-	
-	for(int i = 0; i < n; i++)
-		cin >> point[i].first >> point[i].second;
-	
-	for(int i = 0; i < n; i++){
-		double aux = dist(make_pair(px,py), point[i]);
-		dmax = max(dmax, aux);
-		dmin = min(dmin, aux);
+	cin >> n >> p.ff >> p.ss;
+	for(i = 0; i < n; i++){
+		cin >> aux.ff >> aux.ss;
+		v.emplace_back(aux);
 	}
 
 	for(int i = 0; i < n; i++){
-		double aux;
-		if(i == n-1)
-			aux = dist_line(point[i], point[0]);
-		else
-			aux = dist_line(point[i], point[i+1]);
-		dmin = min(dmin,aux);
-		dmax = max(dmax,aux);
+		double d = dist(p, v[i]);
+		maxD = max(maxD, d);
+		minD = min(minD, d);
+	}
+	for(i = 0; i < n; i++){
+		double d = dist_line(p,v[i],v[(i+1)%n]);
+		maxD = max(maxD,d);
+		minD = min(minD,d);
 	}
 
-	printf("%.10lf\n", (double)M_PI*(dmax*dmax -dmin*dmin));
-
+	cout.precision(10);
+	cout << fixed << (maxD*maxD-minD*minD)*M_PI << "\n";
 	return 0;
 }
