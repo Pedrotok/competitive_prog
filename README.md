@@ -1,10 +1,13 @@
 # competitive_prog
 
 ## Profiles:
-http://codeforces.com/profile/pedrohlf
+[Codeforces](http://codeforces.com/profile/pedrohlf)
 
 
-https://www.urionlinejudge.com.br/judge/en/users/profile/63621
+[HackerEarth](https://www.hackerearth.com/@pedrohlf)
 
 
-https://uva.onlinejudge.org/index.php?option=onlinejudge&page=show_authorstats&userid=804276
+[URI](https://www.urionlinejudge.com.br/judge/en/users/profile/63621)
+
+
+[UVA](https://uva.onlinejudge.org/index.php?option=onlinejudge&page=show_authorstats&userid=804276)
