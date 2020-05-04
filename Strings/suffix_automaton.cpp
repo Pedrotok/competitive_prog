@@ -25,7 +25,7 @@ struct SuffixAutomaton{
 		for(int i = 1; i < sz; i++)
 			aux.emplace_back(i);
 		
-		sort(aux.begin(), aux.end(), [](const int& a, const int&b) {
+		sort(aux.begin(), aux.end(), [&](const int& a, const int&b) {
 			return len[a] < len[b];
 		});
 
