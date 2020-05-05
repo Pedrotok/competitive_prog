@@ -1,5 +1,5 @@
-const int N = 2000, A = 256;
-int trie[N+5][A], term[N+5], fail[N+5], ptr;
+const int N = 100005, A = 26;
+int trie[N+5][A], term[N+5], fail[N+5], ptr = 1;
 
 void build_aho() {
 	queue<int> Q;
@@ -26,8 +26,9 @@ void build_aho() {
 void insert(string s) {
 	int v = 0;
 	for(int j = 0; s[j]; j++) {
-		if(!trie[v][s[j]]) trie[v][s[j]] = ptr++;
-		v = trie[v][s[j]];
+		int c = s[j] - 'a';
+		if(!trie[v][c]) trie[v][c] = ptr++;
+		v = trie[v][c];
 	}
 	term[v] = 1;
 }

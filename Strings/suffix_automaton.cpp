@@ -68,7 +68,6 @@ struct SuffixAutomaton{
 					}
 				}
 			}
-			else link[cur] = 0;
  
 			last = cur;
 		}
