@@ -1,13 +1,3 @@
-#include <bits/stdc++.h>
- 
-#define ff first
-#define ss second
-#define mp make_pair
- 
-using namespace std;
-
-typedef long long ll;
-
 const int N = 100000, LG = 18;
 vector<int> G[N+5];
 int anc[N+5][LG+2], lvl[N+5];
