@@ -1,24 +1,35 @@
 const int N = 100000;
-int vis[N+5], low[N+5], num[N+5], t, comp;
-stack<int> S;
-vector<int> G[N+5];
+int vis[N+5], comp[N+5];
+vector<int> G[N+5], GT[N+5];
+vector<int> order;
 
-void dfs(int v) {
-	vis[v] = 1;
-	num[v] = low[v] = t++;
-	S.push(v);
+void dfs1(int v) {
+	vis[v] = true;
+	for(int u : G[v])
+		if(!vis[u])
+			dfs1(u);
+	order.push_back(v);
+}
 
-	for(int u : G[v]) {
-		if(!num[u]) dfs(u);
-		if(vis[u]) low[v] = min(low[v], low[u]);
-	}
+void dfs2(int v, int c) {
+	comp[v] = c;
+	for(int u : GT[v])
+		if(!comp[u])
+			dfs2(u, c);
+}
 
-	if(num[v] == low[v]) {
-		while(true) {
-			int u = S.top(); S.pop();
-			vis[u] = 0;
-			if(v == u) break;
-		}
-		comp++;
+void kosaraju(int n) {
+	for(int i = 1; i <= n; i++)
+		vis[i] = false;
+
+	for(int i = 1; i <= n; i++)
+		if(!vis[i])
+			dfs1(i);
+
+	int c = 1;
+	for(int i = (int)order.size()-1; i >= 0; i--) {
+		int v = order[i];
+		if(!comp[v])
+			dfs2(v, c++);
 	}
 }
