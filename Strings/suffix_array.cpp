@@ -41,15 +41,15 @@ vector<int> build_sa(string s) {
 		classes = 1;
 
 		for (int i = 1; i < n; i++) {
-            pair<int, int> cur = {c[p[i]], c[(p[i] + (1 << h)) % n]};
-            pair<int, int> prev = {c[p[i-1]], c[(p[i-1] + (1 << h)) % n]};
-            if (cur != prev)
-                ++classes;
-            cn[p[i]] = classes - 1;
-        }
+			pair<int, int> cur = {c[p[i]], c[(p[i] + (1 << h)) % n]};
+			pair<int, int> prev = {c[p[i-1]], c[(p[i-1] + (1 << h)) % n]};
+			if (cur != prev)
+				++classes;
+			cn[p[i]] = classes - 1;
+		}
 
-        if(classes == n) break;
-        c.swap(cn);
+		if(classes == n) break;
+		c.swap(cn);
 	}
 
 	p.erase(p.begin());
@@ -57,24 +57,24 @@ vector<int> build_sa(string s) {
 }
 
 vector<int> build_lcp(string const s, vector<int> const& p) {
-    int n = (int)s.size();
-    vector<int> rank(n, 0);
-    for (int i = 0; i < n; i++)
-        rank[p[i]] = i;
+	int n = (int)s.size();
+	vector<int> rank(n, 0);
+	for (int i = 0; i < n; i++)
+		rank[p[i]] = i;
 
-    int k = 0;
-    vector<int> lcp(n-1, 0);
-    for (int i = 0; i < n; i++) {
-        if (rank[i] == n - 1) {
-            k = 0;
-            continue;
-        }
-        int j = p[rank[i] + 1];
-        while (i + k < n && j + k < n && s[i+k] == s[j+k])
-            k++;
-        lcp[rank[i]] = k;
-        if (k)
-            k--;
-    }
-    return lcp;
+	int k = 0;
+	vector<int> lcp(n-1, 0);
+	for (int i = 0; i < n; i++) {
+		if (rank[i] == n - 1) {
+			k = 0;
+			continue;
+		}
+		int j = p[rank[i] + 1];
+		while (i + k < n && j + k < n && s[i+k] == s[j+k])
+			k++;
+		lcp[rank[i]] = k;
+		if (k)
+			k--;
+	}
+	return lcp;
 }

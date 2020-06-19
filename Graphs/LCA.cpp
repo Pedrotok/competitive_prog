@@ -33,7 +33,7 @@ int LCA(int u, int v) {
 void preprocess(int n) {
 	dfs(1, 1, 0);
 
-	for(j = 1; j <= LG; j++)
-		for(i = 1; i <= n; i++)
+	for(int j = 1; j <= LG; j++)
+		for(int i = 1; i <= n; i++)
 			anc[i][j] = anc[ anc[i][j-1] ][j-1];
 }

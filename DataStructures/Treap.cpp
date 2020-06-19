@@ -29,7 +29,7 @@ class Treap {
 	}
 
 	void push (pitem it) {
-	    if(it && it->rev) {
+		if(it && it->rev) {
 			it->rev = false;
 			swap (it->l, it->r);
 			if (it->l)  it->l->rev ^= true;
@@ -57,7 +57,7 @@ class Treap {
 
 	void merge(pitem& t, pitem l, pitem r) {
 		push(l);
-    	push(r);
+		push(r);
 		if(l == nullptr || r == nullptr)
 			t = l == nullptr ? r : l;
 		else if(l->prio > r->prio) {
