@@ -1,12 +1,13 @@
+template<typename T>
 class Segtree {
 	int sz;
-	vector<int> st;
-	vector<int> lazy;
+	vector<T> st;
+	vector<T> lazy;
  
-	const int neutral = 1000*1000*1000;
+	const T neutral = 0;
  
-	inline int f(int a, int b) {
-		return min(a, b);
+	inline T f(T a, T b) {
+		return a+b;
 	}
  
 	void propagate(bool isLeaf, int p) {
@@ -20,7 +21,7 @@ class Segtree {
 		lazy[p] = 0;
 	}
  
-	void update(int L, int R, int i, int j, int val, int p) {
+	void update(int L, int R, int i, int j, T val, int p) {
 		propagate(L == R, p);
  
 		if(R < i or L > j) return;
@@ -38,7 +39,7 @@ class Segtree {
 		st[p] = f(st[2*p], st[2*p+1]);
 	}
  
-	int query(int L, int R, int i, int j, int p) {
+	T query(int L, int R, int i, int j, int p) {
 		propagate(L == R, p);
  
 		if(R < i or L > j) return neutral;
@@ -55,11 +56,11 @@ class Segtree {
  
 	public:
 		Segtree(int _sz) : sz(_sz) {
-			st = vector<int>(4*sz+5, 0);
-			lazy = vector<int>(4*sz+5, 0);
+			st = vector<T>(4*sz+5, T(0));
+			lazy = vector<T>(4*sz+5, T(0));
 		}
  
-		void update(int i, int j, int val) {update(0, sz-1, i, j, val, 1);}
+		void update(int i, int j, T val) {update(0, sz-1, i, j, val, 1);}
  
-		int query(int i, int j) {return query(0, sz-1, i, j, 1);}
+		T query(int i, int j) {return query(0, sz-1, i, j, 1);}
 };
