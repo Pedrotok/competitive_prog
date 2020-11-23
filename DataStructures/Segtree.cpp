@@ -47,8 +47,8 @@ class Segtree {
  
 		int M = (L+R)/2;
  
-		int l = query(L,M,i,j,2*p);
-		int r = query(M+1,R,i,j,2*p+1);
+		T l = query(L,M,i,j,2*p);
+		T r = query(M+1,R,i,j,2*p+1);
  
 		return f(l, r);
 	}
